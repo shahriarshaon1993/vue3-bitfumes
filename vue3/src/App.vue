@@ -1,4 +1,24 @@
 <template>
-  <h1>Hello Vue3 from CLI</h1>
-  <p>Something else</p>
+  <h1>DC Heros</h1>
+  <ul>
+    <li v-for="(hero, index) in dcHeros" :key="`hero-${index}`">
+      {{ index }}: {{ hero.name }}
+    </li>
+  </ul>
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        dcHeros: [
+          { name: "SuperGirl" },
+          { name: "Flash" }, 
+          { name: "Arrow" },
+          { name: "Batman" },
+          { name: "Superman" }
+        ]
+      }
+    }
+  };
+</script>
