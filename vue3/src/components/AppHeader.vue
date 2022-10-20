@@ -1,21 +1,11 @@
 <template>
-    <nav class="bg-gray-50 dark:bg-gray-700 mb-10">
+    <nav class="bg-gray-50 dark:bg-gray-700">
         <div class="py-3 px-4 mx-auto max-w-screen-xl md:px-6">
             <div class="flex items-center">
                 <ul class="flex flex-row mt-0 mr-6 space-x-8 text-sm font-medium">
-                    <li>
-                        <router-link to="/" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
-                            Home
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/dc-heros" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
-                            Dc Heros
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/calender" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
-                            Calender
+                    <li v-for="item in lists" :key="item.to">
+                        <router-link :to="item.to" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
+                            {{ item.title }}
                         </router-link>
                     </li>
                 </ul>
@@ -26,7 +16,16 @@
 
 <script>
 export default {
-
+    data() {
+        return {
+            lists: [
+                { title: "Home", to: "/" },
+                { title: "Dc Heros", to: "/dc-heros" },
+                { title: "Calender", to: "/calender" },
+                { title: "Markdown", to: "/markdown" },
+            ]
+        }
+    }
 }
 </script>
 
