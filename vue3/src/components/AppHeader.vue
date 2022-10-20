@@ -4,7 +4,19 @@
             <div class="flex items-center">
                 <ul class="flex flex-row mt-0 mr-6 space-x-8 text-sm font-medium">
                     <li>
-                        <a href="#" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Dc Heros</a>
+                        <router-link to="/" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
+                            Home
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/dc-heros" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
+                            Dc Heros
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/calender" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
+                            Calender
+                        </router-link>
                     </li>
                 </ul>
             </div>
