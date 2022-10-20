@@ -11,7 +11,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> 
 </template>
 
 <script>
@@ -23,6 +23,7 @@ export default {
                 { title: "Dc Heros", to: "/dc-heros" },
                 { title: "Calender", to: "/calender" },
                 { title: "Markdown", to: "/markdown" },
+                { title: "Carousel", to: "/carousel" },
             ]
         }
     }
