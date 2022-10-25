@@ -8,6 +8,8 @@
                             {{ item.title }}
                         </router-link>
                     </li>
+
+                    <button class="text-white" @click="$emit('open-login-modal')">Login</button>
                 </ul>
             </div>
         </div>
