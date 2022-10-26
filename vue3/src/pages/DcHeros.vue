@@ -12,7 +12,13 @@
         </ul>
 
         <form class="mt-10" @submit.prevent="addHero">
-            <input class="border rounded py-2 px-4" v-model="newHero" placeholder="Type hero name here">
+            <input 
+                class="border rounded py-2 px-4" 
+                v-model="newHero" 
+                placeholder="Type hero name here"
+                ref="newHeroRef"
+            >
+
             <button class="bg-blue-500 ml-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Add
                 Hero</button>
         </form>
@@ -21,6 +27,9 @@
 
 <script>
 export default {
+    mounted() {
+        this.$refs.newHeroRef.focus();
+    },
     computed: {
         herosCount() {
             return this.dcHeros.length;

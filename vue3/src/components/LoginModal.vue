@@ -1,52 +1,31 @@
 <template>
-  <section
-    @click="$emit('close-login')"
-    class="z-20 h-screen w-screen bg-gray-500 fixed top-0 opacity-50"
-  ></section>
+  <section @click="close" class="z-20 h-screen w-screen bg-gray-500 fixed top-0 opacity-50"></section>
   <div class="absolute inset-0">
     <div class="flex h-full">
       <div class="z-30 m-auto bg-white px-5 py-5 rounded shadow">
         <div class="w-full max-w-md space-y-8">
           <div>
-            <img
-              class="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
-            <h2
-              class="
+            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Your Company" />
+            <h2 class="
                 mt-6
                 text-center text-3xl
                 font-bold
                 tracking-tight
                 text-gray-900
-              "
-            >
+              ">
               Sign in to your account
             </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-              Or
-              {{ " " }}
-              <a
-                href="#"
-                class="font-medium text-indigo-600 hover:text-indigo-500"
-                >start your 14-day free trial</a
-              >
-            </p>
+            <!-- Login with google -->
+            <GoogleLogin @close-login-from-google="close"/>
           </div>
           <form class="mt-8 space-y-6" @submit.prevent="submit">
             <input type="hidden" name="remember" value="true" />
             <div class="-space-y-px rounded-md shadow-sm">
               <div>
                 <label for="email-address" class="sr-only">Email address</label>
-                <input
-                  v-model="form.email"
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
-                  required=""
-                  class="
+                <input ref="emailRef" v-model="email" id="email-address" name="email" type="email" autocomplete="email"
+                  required="" class="
                     relative
                     block
                     w-full
@@ -62,20 +41,12 @@
                     focus:outline-none
                     focus:ring-indigo-500
                     sm:text-sm
-                  "
-                  placeholder="Email address"
-                />
+                  " placeholder="Email address" />
               </div>
               <div>
                 <label for="password" class="sr-only">Password</label>
-                <input
-                  v-model="form.password"
-                  id="password"
-                  name="password"
-                  type="password"
-                  autocomplete="current-password"
-                  required=""
-                  class="
+                <input v-model="password" id="password" name="password" type="password" autocomplete="current-password"
+                  required="" class="
                     relative
                     block
                     w-full
@@ -91,47 +62,30 @@
                     focus:outline-none
                     focus:ring-indigo-500
                     sm:text-sm
-                  "
-                  placeholder="Password"
-                />
+                  " placeholder="Password" />
               </div>
             </div>
 
             <div class="flex items-center justify-between">
               <div class="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  class="
+                <input id="remember-me" name="remember-me" type="checkbox" class="
                     h-4
                     w-4
                     rounded
                     border-gray-300
                     text-indigo-600
                     focus:ring-indigo-500
-                  "
-                />
-                <label
-                  for="remember-me"
-                  class="ml-2 block text-sm text-gray-900"
-                  >Remember me</label
-                >
+                  " />
+                <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
               </div>
 
               <div class="text-sm">
-                <a
-                  href="#"
-                  class="font-medium text-indigo-600 hover:text-indigo-500"
-                  >Forgot your password?</a
-                >
+                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                class="
+              <button type="submit" class="
                   group
                   relative
                   flex
@@ -150,15 +104,9 @@
                   focus:ring-2
                   focus:ring-indigo-500
                   focus:ring-offset-2
-                "
-              >
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <LockClosedIcon
-                    class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Sign in
+                ">
+                <span v-if="!isLoading">Sign in</span>
+                <span v-else>Sign in...</span>
               </button>
             </div>
           </form>
@@ -169,22 +117,52 @@
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import GoogleLogin from "../components/Login/GoogleLogin.vue";
+
 export default {
+  components: { GoogleLogin },
   data() {
     return {
-      form: {
-        email: 'shaon@gamil.com',
-        password: '123456'
-      }
+      email: 'shaon@gmail.com',
+      password: '123456',
+      isLoading: false
     }
+  },
+  mounted() {
+    this.$refs.emailRef.focus();
   },
   methods: {
     submit() {
+      const auth = getAuth();
+      this.isLoading = true;
+      signInWithEmailAndPassword(auth, this.email, this.password)
+        .then((userCredential) => {
+          // Signed in 
+          // const user = userCredential.user;
+          // ...
+          this.email = "";
+          this.password = "";
+          console.log(userCredential);
+          this.isLoading = false;
+          this.close();
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
 
+          console.log(errorCode + " - " + errorMessage);
+          this.isLoading = false;
+        });
+    },
+
+    close() {
+      this.$emit('close-login');
     }
   }
 };
 </script>
 
 <style>
+
 </style>

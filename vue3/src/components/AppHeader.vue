@@ -4,20 +4,30 @@
             <div class="flex items-center">
                 <ul class="flex flex-row mt-0 mr-6 space-x-8 text-sm font-medium">
                     <li v-for="item in lists" :key="item.to">
-                        <router-link :to="item.to" class="text-gray-900 dark:text-white hover:underline" aria-current="page">
+                        <router-link :to="item.to" class="text-gray-900 dark:text-white hover:underline"
+                            aria-current="page">
                             {{ item.title }}
                         </router-link>
                     </li>
 
-                    <button class="text-white" @click="$emit('open-login-modal')">Login</button>
+                    <button v-if="isLoggedIn" class="text-white" @click="logout">Logout</button>
+                    <button v-else class="text-white" @click="$emit('open-login-modal')">Login</button>
                 </ul>
             </div>
         </div>
-    </nav> 
+    </nav>
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
+
 export default {
+    props: {
+        isLoggedIn: {
+            type: Boolean,
+            required: true
+        }
+    },
     data() {
         return {
             lists: [
@@ -27,6 +37,16 @@ export default {
                 { title: "Markdown", to: "/markdown" },
                 { title: "Carousel", to: "/carousel" },
             ]
+        }
+    },
+    methods: {
+        logout() {
+            const auth = getAuth();
+            signOut(auth).then(() => {
+                console.log('Logout successfully')
+            }).catch((error) => {
+                console.log(error)
+            });
         }
     }
 }
