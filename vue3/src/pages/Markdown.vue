@@ -12,16 +12,18 @@
 
 <script>
 import { marked } from 'marked';
-import debounce from '../utilities/mixins/debounce';
+import useDebounce from '../utilities/composition/useDebounce'
 
 export default {
-    mixins: [debounce],
     data() {
         return {
-            text: ""
+            text: "",
+            debounce: ""
         }
     },
     mounted() {
+        this.debounce = useDebounce();
+
         this.$refs.markdownTextarea.focus();
     },
     methods: {

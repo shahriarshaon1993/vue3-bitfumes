@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref } from "vue";
+import { ref } from "vue";
+import useWindowEvent from "../utilities/composition/useWindowEvent"
 
 export default {
     setup() {
@@ -94,8 +95,7 @@ export default {
 
         const handleKeydown = (e) => pressed(e.key);
 
-        onMounted(() => window.addEventListener('keydown', handleKeydown));
-        onUnmounted(() => window.addEventListener('keydown', handleKeydown));
+        useWindowEvent("keydown", handleKeydown);
 
         return {
             selectedOperation,
