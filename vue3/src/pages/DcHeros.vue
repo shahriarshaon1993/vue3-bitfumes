@@ -12,12 +12,8 @@
         </ul>
 
         <form class="mt-10" @submit.prevent="addHero">
-            <input 
-                class="border rounded py-2 px-4" 
-                v-model="newHero" 
-                placeholder="Type hero name here"
-                ref="newHeroRef"
-            >
+            <input class="border rounded py-2 px-4" v-model="newHero" placeholder="Type hero name here"
+                ref="newHeroRef">
 
             <button class="bg-blue-500 ml-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Add
                 Hero</button>
@@ -26,38 +22,48 @@
 </template>
 
 <script>
+import { computed, onMounted, ref } from "vue";
+
 export default {
-    mounted() {
-        this.$refs.newHeroRef.focus();
-    },
-    computed: {
-        herosCount() {
-            return this.dcHeros.length;
-        }
-    },
-    methods: {
-        addHero() {
-            if (this.newHero !== '') {
-                this.dcHeros.unshift({ name: this.newHero });
-                this.newHero = "";
+    setup() {
+        const newHeroRef = ref("");
+        const newHero = ref("");
+        let dcHeros = ref([
+            { name: "SuperGirl" },
+            { name: "Flash" },
+            { name: "Arrow" },
+            { name: "Batman" },
+            { name: "Superman" }
+        ]);
+
+        onMounted(() => {
+            newHeroRef.value.focus();
+        });
+
+        const herosCount = computed({
+            get: () => dcHeros.value.length
+        });
+
+        function addHero() {
+            if (newHero.value !== '') {
+                dcHeros.value.unshift({ name: newHero.value });
+                newHero.value = "";
             } else {
                 alert("Hero name required");
             }
-        },
-        remove(index) {
-            this.dcHeros = this.dcHeros.filter((hero, i) => i != index);
         }
-    },
-    data() {
+
+        function remove(index) {
+            dcHeros.value = dcHeros.value.filter((hero, i) => i != index);
+        }
+
         return {
-            newHero: "",
-            dcHeros: [
-                { name: "SuperGirl" },
-                { name: "Flash" },
-                { name: "Arrow" },
-                { name: "Batman" },
-                { name: "Superman" }
-            ]
+            newHero,
+            dcHeros,
+            addHero,
+            remove,
+            newHeroRef,
+            herosCount
         }
     }
 }
