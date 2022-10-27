@@ -4,6 +4,7 @@ import DcHeros from './pages/DcHeros.vue';
 import Calender from './pages/Calender.vue';
 import Markdown from './pages/Markdown.vue';
 import Carousel from './pages/Carousel.vue';
+import Calculator from './pages/Calculator.vue';
 
 const routes = [
     { path: '/', component: Home },
@@ -11,6 +12,7 @@ const routes = [
     { path: '/calender', component: Calender },
     { path: '/markdown', component: Markdown },
     { path: '/carousel', component: Carousel },
+    { path: '/calculator', component: Calculator },
 ];
 
 const router = createRouter({
