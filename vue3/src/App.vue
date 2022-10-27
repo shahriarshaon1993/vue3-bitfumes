@@ -5,7 +5,10 @@
     <router-view></router-view>
   </div>
 
-  <LoginModal v-if="isLoginOpen" @close-login="isLoginOpen = false" />
+  <Teleport to="#app">
+    <LoginModal v-if="isLoginOpen" @close-login="isLoginOpen = false" />
+  </Teleport>
+
 </template>
 
 <script>
