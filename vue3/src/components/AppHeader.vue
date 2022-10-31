@@ -38,6 +38,7 @@ export default {
                 { title: "Carousel", to: "/carousel" },
                 { title: "Calculator", to: "/calculator" },
                 { title: "Modal", to: "/reuseable-modal" },
+                { title: "Chat", to: "/chat" },
             ]
         }
     },

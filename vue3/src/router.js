@@ -6,6 +6,7 @@ import Markdown from './pages/Markdown.vue';
 import Carousel from './pages/Carousel.vue';
 import Calculator from './pages/Calculator.vue';
 import ReuseableModal from './pages/ReuseableModal.vue';
+import Chats from './pages/Chats.vue';
 
 const routes = [
     { path: '/', component: Home },
@@ -15,6 +16,7 @@ const routes = [
     { path: '/carousel', component: Carousel },
     { path: '/calculator', component: Calculator },
     { path: '/reuseable-modal', component: ReuseableModal },
+    { path: '/chat', component: Chats },
 ];
 
 const router = createRouter({
