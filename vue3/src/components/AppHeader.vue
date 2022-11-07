@@ -22,12 +22,6 @@
 import { getAuth, signOut } from "firebase/auth";
 
 export default {
-    props: {
-        isLoggedIn: {
-            type: Boolean,
-            required: true
-        }
-    },
     data() {
         return {
             lists: [
@@ -40,6 +34,11 @@ export default {
                 { title: "Modal", to: "/reuseable-modal" },
                 { title: "Chat", to: "/chat" },
             ]
+        }
+    },
+    computed: {
+        isLoggedIn() {
+            return this.$store.state.isLoggedIn;
         }
     },
     methods: {

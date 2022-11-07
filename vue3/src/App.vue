@@ -1,5 +1,5 @@
 <template>
-  <AppHeader :isLoggedIn="isLoggedIn" @open-login-modal="isLoginOpen = true" />
+  <AppHeader @open-login-modal="isLoginOpen = true" />
 
   <div class="w-full flex">
     <router-view></router-view>
@@ -20,21 +20,19 @@ export default {
   components: { AppHeader, LoginModal },
   data() {
     return {
-      isLoginOpen: false,
-      isLoggedIn: false,
-      authUser: {}
+      isLoginOpen: false
     }
   },
   mounted() {
+    console.log(this.$store.state);
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        this.isLoggedIn = true;
-        this.authUser = user;
+        this.$store.commit("setIsLoggedIn", true);
+        this.$store.commit("setAuthUser", user);
       } else {
-        this.isLoggedIn = false;
-        this.authUser = {};
+        this.$store.commit("setIsLoggedIn", false);
+        this.$store.commit("setAuthUser", {});
       }
     });
   }
